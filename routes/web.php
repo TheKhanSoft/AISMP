@@ -9,6 +9,14 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
+// Frontend Components
+use App\Livewire\Frontend\Home;
+use App\Livewire\Frontend\About;
+use App\Livewire\Frontend\NewsList;
+use App\Livewire\Frontend\NewsDetails;
+use App\Livewire\Frontend\Contact;
+use App\Livewire\Frontend\Faq;
+
 // Auth Components
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -87,12 +95,15 @@ RateLimiter::for('login', function (Request $request) {
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes (Placeholders until Phase 7)
+| Public Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', Home::class)->name('home');
+Route::get('/about', About::class)->name('about');
+Route::get('/news', NewsList::class)->name('news.index');
+Route::get('/news/{news:slug}', NewsDetails::class)->name('news.show');
+Route::get('/contact', Contact::class)->name('contact');
+Route::get('/faqs', Faq::class)->name('faqs');
 
 /*
 |--------------------------------------------------------------------------
