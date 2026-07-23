@@ -28,6 +28,12 @@ class User extends Authenticatable implements HasMedia
         'email',
         'password',
         'is_active',
+        'phone',
+        'bio',
+        'designation',
+        'organization',
+        'website',
+        'social_links',
     ];
 
     protected $hidden = [
@@ -41,6 +47,7 @@ class User extends Authenticatable implements HasMedia
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'social_links' => 'array',
         ];
     }
 

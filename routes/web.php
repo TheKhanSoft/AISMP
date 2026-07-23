@@ -67,6 +67,15 @@ use App\Livewire\Admin\Faq\FaqForm as AdminFaqForm;
 // Admin - Menus
 use App\Livewire\Admin\Menus\MenuManager as AdminMenuManager;
 
+// Member Components
+use App\Livewire\Member\Dashboard as MemberDashboard;
+use App\Livewire\Member\ProfileManager;
+use App\Livewire\Member\Membership\Apply as MembershipApply;
+use App\Livewire\Member\Membership\Status as MembershipStatus;
+use App\Livewire\Member\Events\EventCatalog;
+use App\Livewire\Member\Events\EventDetails;
+use App\Livewire\Member\Events\MyEvents;
+
 /*
 |--------------------------------------------------------------------------
 | Rate Limiting
@@ -135,7 +144,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('/settings/{group?}', AdminSettings::class)->name('settings');
 
     // User Management
-    Route::get('/users', AdminUserList::class)->name('users.index');
+    Route::get('/users', AdminUserList::class)->name('users');
     Route::get('/users/create', AdminUserForm::class)->name('users.create');
     Route::get('/users/{userId}/edit', AdminUserForm::class)->name('users.edit');
 
@@ -232,11 +241,19 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 
 /*
 |--------------------------------------------------------------------------
-| Member Portal Routes (Placeholder for Phase 8)
+| Member Portal Routes
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->group(function () {
-    Route::get('/', function () {
-        return 'Member Dashboard — Coming in Phase 8';
-    })->name('dashboard');
+    Route::get('/', MemberDashboard::class)->name('dashboard');
+    Route::get('/profile', ProfileManager::class)->name('profile');
+    
+    // Membership
+    Route::get('/membership/apply', MembershipApply::class)->name('membership.apply');
+    Route::get('/membership/status', MembershipStatus::class)->name('membership.status');
+    
+    // Events
+    Route::get('/events', EventCatalog::class)->name('events.index');
+    Route::get('/events/{event:slug}', EventDetails::class)->name('events.show');
+    Route::get('/my-events', MyEvents::class)->name('events.mine');
 });
